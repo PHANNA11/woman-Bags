@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1007202171700",
+    "project_id": "woman-shop",
+    "storage_bucket": "woman-shop.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1007202171700:android:8e30baa807281b233e4361",
+        "android_client_info": {
+          "package_name": "com.example.firebase_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAQk4_qUZNVnATb9klmZIZbFjMVUMAXtN8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
