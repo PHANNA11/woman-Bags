@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:get/get.dart';
 
 late final FirebaseApp app;
 late final FirebaseAuth auth;
@@ -43,6 +44,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: _getInitFirebase);
+    return GetMaterialApp(home: _getInitFirebase);
   }
 }
