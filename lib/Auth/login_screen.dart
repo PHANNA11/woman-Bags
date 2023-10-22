@@ -1,13 +1,13 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'dart:developer';
+
 import 'package:firebase_app/Auth/sign_up_screen.dart';
 import 'package:firebase_app/home/home_screen.dart';
 import 'package:firebase_app/widget/text_field_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -60,6 +60,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               .signInWithEmailAndPassword(
                                   email: emailController.text,
                                   password: passController.text);
+                          // ignore: unnecessary_null_comparison
                           if (credential != null) {
                             Get.offAll(
                               () => const HomeScreen(),
@@ -67,9 +68,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           }
                         } on FirebaseAuthException catch (e) {
                           if (e.code == 'user-not-found') {
-                            print('No user found for that email.');
+                            log('No user found for that email.');
                           } else if (e.code == 'wrong-password') {
-                            print('Wrong password provided for that user.');
+                            log('Wrong password provided for that user.');
                           }
                         }
                       }),

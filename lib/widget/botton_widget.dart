@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 
+// ignore: must_be_immutable
 class BottonWidget extends StatelessWidget {
   BottonWidget({super.key, this.text, this.colors, required this.onTap});
   String? text;

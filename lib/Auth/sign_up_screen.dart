@@ -1,9 +1,9 @@
+import 'dart:developer';
+
 import 'package:firebase_app/widget/botton_widget.dart';
 import 'package:firebase_app/widget/text_field_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -77,14 +77,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             .createUserWithEmailAndPassword(
                                 email: emailController.text,
                                 password: passwordController.text);
+                        // ignore: unnecessary_null_comparison
                         if (credential != null) {
                           Get.back();
                         }
                       } on FirebaseAuthException catch (e) {
                         if (e.code == 'user-not-found') {
-                          print('No user found for that email.');
+                          log('No user found for that email.');
                         } else if (e.code == 'wrong-password') {
-                          print('Wrong password provided for that user.');
+                          log('Wrong password provided for that user.');
                         }
                       }
                     } else {

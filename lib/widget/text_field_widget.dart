@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 
+// ignore: must_be_immutable
 class TextFieldWidget extends StatelessWidget {
   TextFieldWidget(
       {super.key,
       this.controller,
       this.hindText,
       this.iconData,
-      this.obscureText});
+      this.obscureText,
+      this.onChanged,
+      this.keyboardType});
   TextEditingController? controller;
   String? hindText;
   IconData? iconData;
   bool? obscureText;
+  void Function(String)? onChanged;
+  TextInputType? keyboardType;
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +28,7 @@ class TextFieldWidget extends StatelessWidget {
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10), color: Colors.grey),
         child: TextField(
+          keyboardType: keyboardType,
           controller: controller,
           cursorWidth: 3,
           cursorHeight: 20,
@@ -38,6 +42,7 @@ class TextFieldWidget extends StatelessWidget {
                   : null,
               border: InputBorder.none,
               hintText: hindText ?? 'Enter sometext'),
+          onChanged: onChanged,
         ),
       ),
     );

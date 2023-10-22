@@ -4,11 +4,14 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_app/Auth/login_screen.dart';
 import 'package:firebase_app/data/firebase_field.dart';
+import 'package:firebase_app/home/products/view/add_edit_product.dart';
+import 'package:firebase_app/home/products/view/edit_product.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
+
+import '../widget/product_card_custome.dart';
+import 'products/model/product_model.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -27,16 +30,30 @@ class _HomeScreenState extends State<HomeScreen> {
         child: SafeArea(
           child: Column(
             children: [
-              Card(
-                child: ListTile(
-                  onTap: () async {
-                    await FirebaseAuth.instance
-                        .signOut()
-                        .then((value) => Get.offAll(() => const LoginScreen()));
-                  },
-                  title: const Text('Sign Out'),
-                  trailing: const Icon(Icons.logout_outlined),
-                ),
+              ListTile(
+                onTap: () async {
+                  await FirebaseAuth.instance
+                      .signOut()
+                      .then((value) => Get.offAll(() => const LoginScreen()));
+                },
+                title: const Text('Sign Out'),
+                trailing: const Icon(Icons.logout_outlined),
+              ),
+              const Divider(color: Colors.black),
+              ListTile(
+                onTap: () async {
+                  Get.to(() => AddEditProductScreen());
+                },
+                title: const Text('Add Product'),
+                trailing: const Icon(Icons.arrow_forward_ios),
+              ),
+              const Divider(color: Colors.black),
+              ListTile(
+                onTap: () async {
+                  Get.to(() => const EditProductScreen());
+                },
+                title: const Text('Edit Product'),
+                trailing: const Icon(Icons.arrow_forward_ios),
               )
             ],
           ),
@@ -64,59 +81,16 @@ class _HomeScreenState extends State<HomeScreen> {
             return ListView.builder(
                 itemCount: snapshot.data!.docs.length,
                 itemBuilder: (context, index) {
-                  final data =
-                      snapshot.data!.docs[index].data() as Map<String, dynamic>;
-                  log(data.toString());
-                  return productCard(proData: data);
+                  return ProductCardCustome(
+                    product: ProductModel.fromQuerySnapshot(
+                        snapshot.data!.docs[index].data()
+                            as Map<String, dynamic>),
+                    docId: snapshot.data!.docs[index].id,
+                    isSlidable: false,
+                  );
                 });
           }
         },
-      ),
-    );
-  }
-
-  Widget productCard({Map? proData}) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Container(
-        height: 120,
-        width: double.infinity,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10), color: Colors.white),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              height: 120,
-              width: 120,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10), color: Colors.white),
-              child: CachedNetworkImage(
-                fit: BoxFit.cover,
-                imageUrl: proData![FireBaseAPI().productImage.toString()],
-                progressIndicatorBuilder: (context, url, downloadProgress) =>
-                    Center(
-                        child: CircularProgressIndicator(
-                            value: downloadProgress.progress)),
-                errorWidget: (context, url, error) => const Icon(Icons.error),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                children: [
-                  Text(proData[FireBaseAPI().productName]),
-                  Text(
-                    "\$ ${proData[FireBaseAPI().productPrice]}",
-                    style: const TextStyle(color: Colors.red),
-                  ),
-                  const Spacer(),
-                  Text('Color: ${proData[FireBaseAPI().productColor]}')
-                ],
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }
