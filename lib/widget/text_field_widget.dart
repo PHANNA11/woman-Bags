@@ -9,13 +9,21 @@ class TextFieldWidget extends StatelessWidget {
       this.iconData,
       this.obscureText,
       this.onChanged,
-      this.keyboardType});
+      this.keyboardType,
+      this.height,
+      this.readOnly,
+      this.sufficIconData,
+      this.onTap});
   TextEditingController? controller;
+  double? height;
   String? hindText;
   IconData? iconData;
   bool? obscureText;
+  IconData? sufficIconData;
   void Function(String)? onChanged;
+  void Function()? onTap;
   TextInputType? keyboardType;
+  bool? readOnly;
 
   @override
   Widget build(BuildContext context) {
@@ -23,15 +31,17 @@ class TextFieldWidget extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-        height: 60,
+        height: height ?? 60,
         width: double.infinity,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10), color: Colors.grey),
         child: TextField(
+          onTap: onTap,
           keyboardType: keyboardType,
           controller: controller,
           cursorWidth: 3,
           cursorHeight: 20,
+          readOnly: readOnly ?? false,
           obscureText: obscureText ?? false,
           decoration: InputDecoration(
               prefixIcon: iconData != null
@@ -40,6 +50,10 @@ class TextFieldWidget extends StatelessWidget {
                       color: Colors.black,
                     )
                   : null,
+              suffixIcon: Icon(
+                sufficIconData,
+                color: Colors.black,
+              ),
               border: InputBorder.none,
               hintText: hindText ?? 'Enter sometext'),
           onChanged: onChanged,

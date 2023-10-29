@@ -4,8 +4,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_app/Auth/login_screen.dart';
 import 'package:firebase_app/data/firebase_field.dart';
+import 'package:firebase_app/home/filter_screen.dart';
 import 'package:firebase_app/home/products/view/add_edit_product.dart';
 import 'package:firebase_app/home/products/view/edit_product.dart';
+import 'package:firebase_app/widget/text_field_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -60,7 +62,18 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       appBar: AppBar(
-        title: const Text('Home Screen'),
+        elevation: 0,
+        foregroundColor: Colors.black,
+        backgroundColor: Colors.white,
+        title: TextFieldWidget(
+          onTap: () {
+            Get.to(() => const SearchScreen());
+          },
+          readOnly: true,
+          height: 50,
+          hindText: 'Search product',
+          sufficIconData: Icons.search,
+        ),
       ),
       body: StreamBuilder<QuerySnapshot>(
         stream: dataRef.snapshots(),
