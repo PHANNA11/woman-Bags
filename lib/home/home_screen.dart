@@ -12,6 +12,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../test/upload_image.dart';
 import '../widget/product_card_custome.dart';
 import 'products/model/product_model.dart';
 
@@ -55,6 +56,14 @@ class _HomeScreenState extends State<HomeScreen> {
                   Get.to(() => const EditProductScreen());
                 },
                 title: const Text('Edit Product'),
+                trailing: const Icon(Icons.arrow_forward_ios),
+              ),
+              const Divider(color: Colors.black),
+              ListTile(
+                onTap: () async {
+                  Get.to(() => const FirebaseStorageSscreen());
+                },
+                title: const Text('Test Image'),
                 trailing: const Icon(Icons.arrow_forward_ios),
               )
             ],
